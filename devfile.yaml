@@ -1,0 +1,56 @@
+schemaVersion: 2.1.0
+metadata:
+  name: golang-example
+attributes:
+  che-theia.eclipse.org/sidecar-policy: USE_DEV_CONTAINER
+components:
+  - name: go-cli
+    container:
+      # this version is used in the plugin
+      image: quay.io/devfile/universal-developer-image:ubi8-b452131
+      env:
+        - name: GOPATH
+          # replicate the GOPATH from the plugin
+          value: /projects
+        - name: GOCACHE
+          # replicate the GOCACHE from the plugin, even though the cache is not shared
+          # between the two
+          value: /tmp/.cache
+      endpoints:
+        - name: 8080-tcp
+          targetPort: 27017
+      memoryLimit: 2Gi
+      mountSources: true
+commands:
+  - id: run
+    exec:
+      label: "1.1 Run outyet"
+      component: go-cli
+      workingDir: ${PROJECTS_ROOT}/golang-example/outyet
+      commandLine: "go get -d && go run main.go"
+      group:
+        kind: run
+  - id: stop
+    exec:
+      label: "1.2 Stop outyet"
+      component: go-cli
+      commandLine: "kill $(pidof go)"
+      group:
+        kind: run
+  - id: test
+    exec:
+      label: "1.3 Test outyet"
+      component: go-cli
+      workingDir: ${PROJECTS_ROOT}/golang-example/outyet
+      commandLine: "go test"
+      group:
+        kind: test
+  - id: file
+    exec:
+      label: "Run current file"
+      component: go-cli
+      workingDir: ${fileDirname}
+      commandLine: "go get -d && go run ${file}"
+      group:
+        kind: run
+
