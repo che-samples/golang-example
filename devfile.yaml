@@ -11,7 +11,7 @@ components:
       env:
         - name: GOPATH
           # replicate the GOPATH from the plugin
-          value: /projects
+          value: /projects:/home/user/go
         - name: GOCACHE
           # replicate the GOCACHE from the plugin, even though the cache is not shared
           # between the two
