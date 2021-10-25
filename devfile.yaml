@@ -7,7 +7,7 @@ components:
   - name: go-cli
     container:
       # this version is used in the plugin
-      image: quay.io/devfile/universal-developer-image:ubi8-b452131
+      image: quay.io/devfile/universal-developer-image:ubi8-112f94a
       env:
         - name: GOPATH
           # replicate the GOPATH from the plugin
