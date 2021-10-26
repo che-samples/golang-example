@@ -6,15 +6,11 @@ attributes:
 components:
   - name: go-cli
     container:
-      # this version is used in the plugin
       image: quay.io/devfile/universal-developer-image:ubi8-112f94a
       env:
         - name: GOPATH
-          # replicate the GOPATH from the plugin
           value: /projects:/home/user/go
         - name: GOCACHE
-          # replicate the GOCACHE from the plugin, even though the cache is not shared
-          # between the two
           value: /tmp/.cache
       endpoints:
         - name: 8080-tcp
